@@ -1,0 +1,18 @@
+pre-commit:
+  parallel: true
+  commands:
+    biome-checks:
+      exclude:
+        - 'node_modules/**/*'
+        - 'dist/**/*'
+      run: npx @biomejs/biome check --write --staged --no-errors-on-unmatched
+      stage_fixed: true
+prepare-commit-msg:
+  commands:
+    commitzen:
+      interactive: true
+      run: exec < /dev/tty && npx cz --hook || true
+commit-msg:
+  commands:
+    "lint commit message":
+      run: npx commitlint --edit {1}
